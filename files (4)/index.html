@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="google-site-verification" content="jt3TlOyi9YRBHO2M6Bl0hlwvHmjcqSFDAN3QP1b9GnA"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#F0A500"/>
+  <meta name="description" content="CloseFast Omni — AI Orchestrator with BYOK. Connect Claude, GPT or Leonardo via your own API keys. Automate Web3 analysis, media creation, landing pages, e-commerce and social media. Deploy in 2 minutes."/>
+  <meta name="keywords" content="AI agent, BYOK AI, bring your own key, API automation, Web3 analysis, AI landing page builder, social media automation, e-commerce AI, Claude API, GPT automation, Leonardo API, no-code AI orchestrator, Etsy automation, competitor analysis AI"/>
+  <meta property="og:title" content="CloseFast Omni — AI Orchestrator · BYOK · Web3 · E-commerce · Media"/>
+  <meta property="og:description" content="Connect your Claude/GPT/Leonardo API keys. Deploy AI agents for Web3 analysis, media creation, landing pages and e-commerce automation. You own the keys. You control the cost."/>
+  <meta property="og:url" content="https://closefast.tech"/>
+  <meta property="og:type" content="website"/>
+  <title>CloseFast Omni — AI Orchestrator · BYOK · API Automation · Web3 · Media · E-commerce</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230F172A'/><text x='16' y='24' text-anchor='middle' font-size='20' fill='%23F0A500'>⚡</text></svg>"/>
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230F172A'/><text x='16' y='24' text-anchor='middle' font-size='20' fill='%23F0A500'>⚡</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"CloseFast Omni","url":"https://closefast.tech","description":"AI-powered autonomous agent platform for Etsy sellers.","applicationCategory":"BusinessApplication","offers":{"@type":"Offer","price":"19","priceCurrency":"USD"},"operatingSystem":"Web"}
+  </script>
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{background:#F5F0E8;color:#1A1A1A;font-family:'DM Sans',system-ui,sans-serif;min-height:100vh}
+
+    /* ── LOADER (fullscreen only while app.js is downloading) ── */
+    #ldr{
+      position:fixed;inset:0;z-index:200;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      gap:14px;background:#09090B;
+      transition:opacity .4s;
+    }
+    .sp{width:42px;height:42px;border:3px solid #1E293B;border-top-color:#F0A500;border-radius:50%;animation:sp .8s linear infinite}
+    @keyframes sp{to{transform:rotate(360deg)}}
+    #st{font-size:11px;color:#F0A500;font-family:monospace;letter-spacing:2px}
+
+    /* ── REACT APP — fullscreen overlay, always on top ──── */
+    #app-overlay {
+      position:fixed;
+      inset:0;
+      z-index:200;
+      background:#F8F9FC;
+      display:flex;
+      flex-direction:column;
+      overflow-y:auto;
+      transition:opacity .3s;
+    }
+    #root {
+      flex:1;
+      min-height:100vh;
+    }
+
+    /* ── LANDING — behind React overlay (for SEO/fallback) ─ */
+    #landing-seo {
+      position:relative;
+      z-index:1;
+    }
+  
+    /* ── REGISTRATION MODAL ──────────────────────────────────────── */
+    #cf-register-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #cf-register-modal.open { display: flex; }
+
+    #cf-register-modal .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    #cf-register-modal .modal-box {
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+      animation: modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes modalIn {
+      from { opacity:0; transform:scale(0.92) translateY(20px); }
+      to   { opacity:1; transform:scale(1) translateY(0); }
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #F3F4F6;
+      color: #6B7280;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+    }
+    .modal-close-btn:hover { background: #E5E7EB; color: #111; }
+    .modal-logo {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 24px;
+    }
+    .modal-logo .logo-mark {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg,#F0A500,#B07800);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      color: #fff;
+    }
+    .modal-logo span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: #111;
+    }
+    .modal-logo span em { font-style:normal; color:#D4920A; }
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+    .modal-sub {
+      font-size: 13px;
+      color: #6B7280;
+      margin-bottom: 24px;
+    }
+    .modal-field { margin-bottom: 14px; }
+    .modal-field label {
+      display: block;
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9CA3AF;
+      margin-bottom: 6px;
+    }
+    .modal-field input {
+      width: 100%;
+      height: 46px;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 0 14px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: #111;
+      background: #FAFAFA;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .modal-field input:focus { border-color: #D4920A; background: #fff; }
+    .modal-submit {
+      width: 100%;
+      height: 50px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg,#F0A500,#D4920A);
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 6px;
+      box-shadow: 0 4px 20px rgba(240,165,0,0.35);
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .modal-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(240,165,0,0.45); }
+    .modal-submit:active { transform: translateY(0); }
+    .modal-submit .btn-spin {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: sp 0.7s linear infinite;
+    }
+    .modal-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 18px 0;
+    }
+    .modal-divider::before,
+    .modal-divider::after {
+      content:''; flex:1; height:1px; background:#E5E7EB;
+    }
+    .modal-divider span { font-size:12px; color:#9CA3AF; }
+    .modal-plans {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .modal-plan {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: #FAFAFA;
+    }
+    .modal-plan:hover { border-color: #D4920A; }
+    .modal-plan.selected { border-color: #D4920A; background: rgba(240,165,0,0.06); }
+    .modal-plan .plan-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #111;
+    }
+    .modal-plan .plan-price {
+      font-size: 11px;
+      color: #9CA3AF;
+      margin-top: 2px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .modal-plan.selected .plan-name { color: #D4920A; }
+    .modal-terms {
+      font-size: 11px;
+      color: #9CA3AF;
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+    .modal-terms a { color: #D4920A; text-decoration: none; }
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .modal-success .success-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .modal-success h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .modal-success p {
+      font-size: 13px;
+      color: #6B7280;
+      line-height: 1.7;
+    }
+
+  
+    /* ── TERMINAL WIDGET ──────────────────────────────────────────── */
+    .cf-terminal {
+      background: #0A0E1A;
+      border: 1px solid rgba(240,165,0,.35);
+      border-radius: 14px;
+      overflow: hidden;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(240,165,0,.08);
+      text-align: left;
+      margin-bottom: 48px;
+    }
+    .cf-terminal-header {
+      background: #111827;
+      padding: 11px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .cf-dots { display:flex; gap:6px; }
+    .cf-dots span { width:11px;height:11px;border-radius:50%;display:block; }
+    .cf-terminal-title {
+      flex: 1;
+      font-size: 11px;
+      color: #64748B;
+      letter-spacing: .03em;
+    }
+    .cf-terminal-live {
+      font-size: 10px;
+      color: #27C93F;
+      letter-spacing: .08em;
+      animation: pulse 2s infinite;
+    }
+    .cf-console {
+      padding: 18px 20px;
+      min-height: 200px;
+      font-size: 12.5px;
+      line-height: 1.75;
+      color: #94A3B8;
+    }
+    .cf-console-line {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2px;
+    }
+    .cf-prompt { color: #F0A500; flex-shrink:0; }
+    .cf-cmd    { color: #E2E8F0; }
+    .cf-out    { color: #94A3B8; padding-left: 16px; }
+    .cf-ok     { color: #27C93F; }
+    .cf-warn   { color: #FFBD2E; }
+    .cf-info   { color: #60A5FA; }
+    .cf-profit { color: #F0A500; font-weight: 700; }
+    .cf-cursor {
+      display: inline-block;
+      width: 8px; height: 14px;
+      background: #F0A500;
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink .8s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  </style>
+
+  <!-- Landing CSS scoped to .cf-landing only -->
+  <style>
+  /* ── LANDING THEME VARIABLES ─────────────────────────────────── */
+  .cf-landing {
+    --black:   #F5F0E8;
+    --surface: #FAFAF7;
+    --card:    #FFFFFF;
+    --border:  rgba(0,0,0,0.08);
+    --amber:   #D4920A;
+    --amber2:  #B07800;
+    --amberL:  rgba(240,165,0,0.12);
+    --white:   #1A1A1A;
+    --muted:   #5A6072;
+    --green:   #059669;
+    --blue:    #1D4ED8;
+    --mono:    'IBM Plex Mono', monospace;
+    --sans:    'DM Sans', sans-serif;
+    --display: 'Syne', sans-serif;
+  }
+  /* Dark theme override */
+  .cf-landing.dark {
+    --black:   #07080A;
+    --surface: #0F1117;
+    --card:    #141720;
+    --border:  rgba(255,255,255,0.07);
+    --amber:   #F0A500;
+    --amber2:  #D4920A;
+    --amberL:  rgba(240,165,0,0.10);
+    --white:   #F5F5F0;
+    --muted:   #8B909A;
+    --green:   #10B981;
+    --blue:    #3B82F6;
+  }
+  /* Theme transition */
+  .cf-landing, .cf-landing * {
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* ── THEME TOGGLE BUTTON ──────────────────────────────────────── */
+  .cf-theme-toggle {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 50;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: #FFFFFF;
+    color: #1A1A1A;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    transition: all 0.2s;
+  }
+  .cf-landing.dark .cf-theme-toggle {
+    background: #1A1F2E;
+    border-color: rgba(255,255,255,0.12);
+    color: #F5F5F0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .cf-theme-toggle:hover { transform: scale(1.1); }
+
+/* ─── RESET & ROOT ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+
+/* ─── LANDING WRAPPER ─────────────────────────────────────────────────────── */
+
+
+/* ─── TYPOGRAPHY ──────────────────────────────────────────────────────────── */
+.cf-landing h1,
+.cf-landing h2,
+.cf-landing h3 { font-family: var(--display); line-height: 1.1; }
+
+.section-label {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid rgba(240,165,0,.25);
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+
+/* ─── LAYOUT ──────────────────────────────────────────────────────────────── */
+.cf-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ─── SECTION BASE ────────────────────────────────────────────────────────── */
+.cf-section {
+  padding: 96px 0;
+  position: relative;
+}
+.cf-section + .cf-section {
+  border-top: 1px solid var(--border);
+}
+
+/* ─── HERO TAGLINE ────────────────────────────────────────────────────────── */
+.cf-hero {
+  padding: 80px 0 96px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cf-hero::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 500px;
+  background: radial-gradient(ellipse at center, rgba(240,165,0,.13) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cf-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(240,165,0,.08);
+  border: 1px solid rgba(240,165,0,.2);
+  border-radius: 30px;
+  padding: 6px 18px;
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--amber);
+  margin-bottom: 32px;
+  letter-spacing: .05em;
+}
+.cf-hero-badge span.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: .4; }
+}
+.cf-hero h1 {
+  font-size: clamp(38px, 6vw, 74px);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  color: var(--white);
+  max-width: 860px;
+  margin: 0 auto 24px;
+}
+.cf-hero h1 em {
+  font-style: normal;
+  color: var(--amber);
+}
+.cf-hero-sub {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0 auto 44px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.cf-hero-cta {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--amber);
+  color: #000;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: all .2s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(240,165,0,.3);
+}
+.btn-primary:hover {
+  background: var(--amber2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 32px rgba(240,165,0,.4);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--white);
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 14px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all .2s;
+  cursor: pointer;
+}
+.btn-ghost:hover {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.04);
+}
+
+/* ─── STATS ROW ───────────────────────────────────────────────────────────── */
+.cf-stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  margin-top: 60px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+.cf-stat-item { text-align: center; }
+.cf-stat-num {
+  font-family: var(--display);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--amber);
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.cf-stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* ─── FEATURES ────────────────────────────────────────────────────────────── */
+.cf-features-header {
+  max-width: 600px;
+  margin-bottom: 60px;
+}
+.cf-features-header h2 {
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  margin-bottom: 16px;
+}
+.cf-features-header p {
+  color: var(--muted);
+  font-size: 16px;
+}
+.cf-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .cf-features-grid { grid-template-columns: 1fr; }
+}
+.cf-feature-card {
+  background: var(--card);
+  padding: 36px 32px;
+  position: relative;
+  transition: background .2s;
+}
+.cf-feature-card:hover { background: #191d27; }
+.cf-feature-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 32px; right: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.cf-feature-card:hover::after { opacity: .4; }
+.cf-feature-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: var(--amberL);
+  border: 1px solid rgba(240,165,0,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+.cf-feature-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px;
+  font-family: var(--display);
+}
+.cf-feature-card p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.cf-feature-tag {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--amber);
+  text-transform: uppercase;
+}
+
+/* ─── HOW IT WORKS ────────────────────────────────────────────────────────── */
+.cf-how {
+  background: var(--surface);
+}
+.cf-how-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .cf-how-inner { grid-template-columns: 1fr; gap: 48px; }
+}
+.cf-how-left h2 {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  margin-bottom: 16px;
+}
+.cf-how-left p {
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 380px;
+}
+.cf-steps { display: flex; flex-direction: column; gap: 0; }
+.cf-step {
+  display: flex;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.cf-step:last-child { border-bottom: none; }
+.cf-step-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--amber);
+  background: var(--amberL);
+  border: 1px solid rgba(240,165,0,.2);
+  border-radius: 8px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: .05em;
+}
+.cf-step-body h4 {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.cf-step-body p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.cf-step-body code {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  background: rgba(240,165,0,.07);
+  border: 1px solid rgba(240,165,0,.15);
+  border-radius: 5px;
+  padding: 4px 10px;
+  color: var(--amber);
+}
+
+/* ─── PLATFORMS ───────────────────────────────────────────────────────────── */
+.cf-platforms {
+  text-align: center;
+}
+.cf-platforms h2 {
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  margin-bottom: 12px;
+}
+.cf-platforms-sub {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 52px;
+}
+.cf-platforms-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.cf-platform-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 22px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+  text-decoration: none;
+  transition: all .2s;
+}
+.cf-platform-pill:hover {
+  border-color: rgba(240,165,0,.3);
+  background: rgba(240,165,0,.05);
+  transform: translateY(-2px);
+}
+.cf-platform-pill .pill-icon { font-size: 20px; }
+
+/* ─── SEO FOOTER TEXT ─────────────────────────────────────────────────────── */
+.cf-seo-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 56px 0;
+}
+.cf-seo-inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+}
+@media (max-width: 768px) {
+  .cf-seo-inner { grid-template-columns: 1fr; gap: 32px; }
+}
+.cf-seo-brand { max-width: 360px; }
+.cf-seo-brand-name {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.cf-seo-brand-name .logo-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #F0A500, #B07800);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.cf-seo-brand p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.cf-seo-col h4 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 16px;
+}
+.cf-seo-col ul {
+  list-style: none;
+}
+.cf-seo-col ul li {
+  margin-bottom: 10px;
+}
+.cf-seo-col ul li a {
+  color: var(--muted);
+  font-size: 13px;
+  text-decoration: none;
+  transition: color .15s;
+}
+.cf-seo-col ul li a:hover { color: var(--white); }
+.cf-bottom-bar {
+  border-top: 1px solid var(--border);
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.cf-bottom-bar p {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+/* ─── SEO KEYWORDS PARAGRAPH ─────────────────────────────────────────────── */
+.cf-seo-keywords {
+  background: var(--black);
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+.cf-seo-keywords p {
+  font-size: 12px;
+  color: rgba(139,144,154,.5);
+  line-height: 1.8;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ─── ANIMATIONS ──────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-1 { animation: fadeUp .6s .1s both; }
+.fade-2 { animation: fadeUp .6s .2s both; }
+.fade-3 { animation: fadeUp .6s .35s both; }
+.fade-4 { animation: fadeUp .6s .5s both; }
+  </style>
+</head>
+<body>
+
+  <!-- SEO block — off-screen, safe (no cloaking), indexed by Google -->
+  <div class="seo-hidden" aria-hidden="true" style="position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">
+    <h1>CloseFast Omni: Autonomous AI Agents for Etsy &amp; E-commerce Automation</h1>
+    <h2>Best AI tools for Etsy sellers 2025 — Dynamic Pricing, SEO &amp; Social Media</h2>
+    <h3>AI-powered print-on-demand automation with Printify, Stripe and Monad blockchain</h3>
+
+    <!-- Primary keywords -->
+    <p>
+      CloseFast Omni is the leading <strong>AI agents for Etsy</strong> platform.
+      Use our <strong>Etsy dynamic pricing bot</strong> to automatically reprice listings based on competitor data.
+      Our <strong>automated SEO keywords generator</strong> creates optimised titles and tags for every product.
+      The built-in <strong>competitor price tracking AI</strong> monitors rival shops 24/7.
+    </p>
+
+    <!-- LSI phrases: social media -->
+    <p>
+      Built-in <strong>social media AI automation</strong> publishes to Pinterest, Instagram and TikTok.
+      The <strong>Pinterest AI scheduler</strong> creates product pins with buyable links automatically.
+      <strong>Instagram Reels generator</strong> turns Etsy listings into viral short videos.
+      Automate your <strong>TikTok shop content</strong> and grow followers on autopilot.
+    </p>
+
+    <!-- LSI phrases: commerce + Web3 -->
+    <p>
+      Full <strong>Printify automation</strong> routes orders from Etsy to production with zero manual work.
+      <strong>Stripe billing integration</strong> tracks revenue, subscriptions and payouts in real time.
+      As a <strong>Web3 commerce platform</strong> on <strong>Monad blockchain</strong>,
+      CloseFast also enables <strong>token creation</strong> and on-chain payment processing.
+      The <strong>VLY token</strong> gives holders discounts and profit-sharing on the platform.
+    </p>
+
+    <!-- LSI phrases: automation tools -->
+    <p>
+      <strong>SaaS automation tools</strong> for small business include:
+      autonomous inventory management, AI-driven order routing, financial reporting (EBITDA, LTV, Burn Rate),
+      AI photo generator for product listings (DALL·E 3),
+      video ad creator (Runway Gen-3, Kling AI, Luma Dream Machine),
+      and a <strong>shadow competitor spy</strong> tool that reveals pricing gaps and keyword opportunities.
+    </p>
+
+    <!-- Long-tail keywords -->
+    <p>
+      How to automate Etsy shop with AI.
+      Best Etsy SEO tool 2025.
+      Printify and Etsy automation software.
+      AI business agent for print on demand sellers.
+      Etsy pricing optimizer with Claude AI.
+      Web3 Etsy marketplace integration.
+      Autonomous business tools for solopreneurs.
+      No-code AI agent for e-commerce.
+      Monad blockchain token launcher for Etsy sellers.
+      One-click social media posting for Etsy shops.
+    </p>
+
+    <nav>
+      <a href="https://closefast.tech">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="https://closefast.tech/#features">Features</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="https://pancakeswap.finance/swap?outputCurrency=0x9459ddd1B70E51280DEf774650EcD04F0e24d234">VLY Token</a>
+    </nav>
+  </div>
+
+  <!-- Static landing — always visible, covered by React when it loads -->
+  <div id="landing-seo">
+  <!-- Theme toggle -->
+  <button class="cf-theme-toggle" id="cf-theme-btn" title="Toggle dark/light" onclick="cfToggleTheme()">🌙</button>
+
+<div class="cf-landing">
+
+  <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+  <section class="cf-hero cf-section">
+    <div class="cf-container">
+      <div class="cf-hero-badge fade-1">
+        <span class="dot"></span>
+        BYOK · Claude · GPT · Leonardo · Live on closefast.tech
+      </div>
+
+      <h1 class="fade-2">
+        One orchestrator.<br/>
+        <em>Your API keys. Your rules.</em>
+      </h1>
+
+      <p class="cf-hero-sub fade-3">
+        Connect Claude, GPT or Leonardo via your own API keys — then deploy agents that analyse Web3 data, generate media, build landing pages and automate e-commerce. You pay only for the tokens you use. No markup. No lock-in.
+      </p>
+
+      <div class="cf-hero-cta fade-4">
+        <a href="/register.html" class="btn-primary">
+          ⚡ Start Free — 2 minutes setup
+        </a>
+        <a href="#how-it-works" class="btn-ghost">
+          See how it works →
+        </a>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:rgba(139,144,154,.7);display:flex;align-items:center;justify-content:center;gap:6px;font-family:'IBM Plex Mono',monospace;">
+        🔒 Payments by <span style="color:#6772E5;font-weight:700;">Stripe</span>&nbsp;·&nbsp;Visa · Mastercard · Apple Pay · Crypto
+      </div>
+
+      <div class="cf-stats fade-4">
+        <div class="cf-stat-item">
+          <div class="cf-stat-num">340+</div>
+          <div class="cf-stat-label">Active sellers</div>
+        </div>
+        <div class="cf-stat-item">
+          <div class="cf-stat-num">$1,450</div>
+          <div class="cf-stat-label">Value included</div>
+        </div>
+        <div class="cf-stat-item">
+          <div class="cf-stat-num">24/7</div>
+          <div class="cf-stat-label">AI Autopilot</div>
+        </div>
+        <div class="cf-stat-item">
+          <div class="cf-stat-num">2 min</div>
+          <div class="cf-stat-label">Setup time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── LIVE AGENT DEMO TERMINAL ─────────────────────────────────── -->
+  <div style="padding: 0 0 80px; background: var(--black);">
+    <div style="max-width: 640px; margin: 0 auto; padding: 0 24px;">
+
+      <!-- Label -->
+      <div style="text-align:center; margin-bottom: 20px;">
+        <span style="display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(240,165,0,.22);border-radius:20px;padding:4px 14px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:pulse 2s infinite;display:inline-block;"></span>
+          Live agent demo
+        </span>
+      </div>
+
+      <!-- Terminal window -->
+      <div id="cf-terminal" style="background:#0A0E18;border:1px solid rgba(240,165,0,.3);border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 0 1px rgba(240,165,0,.05);">
+
+        <!-- Traffic lights header -->
+        <div style="background:#111827;padding:11px 16px;display:flex;align-items:center;gap:7px;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div style="width:11px;height:11px;border-radius:50%;background:#FF5F56;"></div>
+          <div style="width:11px;height:11px;border-radius:50%;background:#FFBD2E;"></div>
+          <div style="width:11px;height:11px;border-radius:50%;background:#27C93F;"></div>
+          <span style="color:#4B5563;font-family:'IBM Plex Mono',monospace;font-size:11px;margin-left:10px;">closefast_agent_v1.sh</span>
+          <span id="cf-term-status" style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#27C93F;display:flex;align-items:center;gap:5px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#27C93F;display:inline-block;animation:pulse 1.5s infinite;"></span>
+            RUNNING
+          </span>
+        </div>
+
+        <!-- Console output -->
+        <div id="cf-console" style="padding:20px 22px;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.9;min-height:260px;max-height:320px;overflow-y:auto;color:#94A3B8;"></div>
+
+        <!-- Progress bar -->
+        <div style="background:#0F172A;padding:10px 22px 14px;border-top:1px solid rgba(255,255,255,.05);">
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4B5563;">Agent efficiency</span>
+            <span id="cf-efficiency" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#F0A500;">0%</span>
+          </div>
+          <div style="background:#1E293B;border-radius:3px;height:4px;overflow:hidden;">
+            <div id="cf-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#F0A500,#10B981);border-radius:3px;transition:width 0.6s ease;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── FEATURES ──────────────────────────────────────────────────────── -->
+  
+  <!-- ── LIVE AGENT DEMO TERMINAL ─────────────────────────────────── -->
+  <section style="padding:0 28px 72px;background:var(--black);">
+    <div style="max-width:680px;margin:0 auto;text-align:center;">
+      <div style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;
+        letter-spacing:.18em;text-transform:uppercase;color:var(--amber);
+        border:1px solid rgba(240,165,0,.25);border-radius:20px;
+        padding:4px 14px;margin-bottom:20px;">
+        Live agent preview
+      </div>
+      <p style="font-family:'DM Sans',sans-serif;font-size:15px;color:var(--muted);margin-bottom:28px;">
+        This is what your AI agent does while you sleep.
+      </p>
+
+      <!-- Terminal window -->
+      <div style="background:#0D1117;border:1px solid rgba(240,165,0,.3);border-radius:14px;
+        overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5);text-align:left;">
+
+        <!-- Title bar -->
+        <div style="background:#161B22;padding:12px 16px;display:flex;align-items:center;
+          gap:8px;border-bottom:1px solid #21262D;">
+          <div style="width:11px;height:11px;border-radius:50%;background:#FF5F56;"></div>
+          <div style="width:11px;height:11px;border-radius:50%;background:#FFBD2E;"></div>
+          <div style="width:11px;height:11px;border-radius:50%;background:#27C93F;"></div>
+          <span style="color:#8B949E;font-size:12px;font-family:'IBM Plex Mono',monospace;
+            margin-left:12px;letter-spacing:.04em;">
+            closefast_agent_v3.sh
+          </span>
+          <span id="cf-agent-status" style="margin-left:auto;font-family:'IBM Plex Mono',monospace;
+            font-size:10px;color:#27C93F;letter-spacing:.06em;">● RUNNING</span>
+        </div>
+
+        <!-- Console output -->
+        <div id="cf-demo-console" style="padding:20px 22px;font-family:'IBM Plex Mono',monospace;
+          font-size:12.5px;line-height:1.75;min-height:240px;max-height:300px;overflow-y:auto;
+          color:#C9D1D9;">
+          <span style="color:#F0A500;">❯</span>&nbsp;<span style="color:#58A6FF;">closefast</span>
+          &nbsp;--start --store VibeprintsProducts<br/>
+        </div>
+
+        <!-- Bottom bar -->
+        <div style="background:#161B22;padding:8px 16px;border-top:1px solid #21262D;
+          display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8B949E;">
+            Session: Etsy · Printify · Stripe · X
+          </span>
+          <span id="cf-agent-time" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8B949E;"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  (function(){
+    var LINES = [
+      { delay: 0,    color: "#58A6FF",  text: "Authenticating with Etsy API... ✓" },
+      { delay: 900,  color: "#C9D1D9",  text: "Scanning <strong style='color:#F0A500'>48 competitor shops</strong> in niche: Wall Art..." },
+      { delay: 2100, color: "#FF7B72",  text: "⚠️  Alert: 'VintageArtsShop' dropped price → $24.00" },
+      { delay: 3200, color: "#C9D1D9",  text: "Running price optimisation model (Claude Sonnet)..." },
+      { delay: 4100, color: "#3FB950",  text: "✅ Updated 'Handmade Mug Print' → $23.95  (+margin: 14.2%)" },
+      { delay: 5200, color: "#C9D1D9",  text: "Connecting Social Autopilot → X / Twitter..." },
+      { delay: 6000, color: "#3FB950",  text: "✅ Thread scheduled: 'Top 5 Wall Art Trends 2025'" },
+      { delay: 7100, color: "#C9D1D9",  text: "Syncing Printify inventory: 124 active SKUs..." },
+      { delay: 8000, color: "#3FB950",  text: "✅ 3 new orders routed to production automatically" },
+      { delay: 9100, color: "#C9D1D9",  text: "Generating AI photo prompt for new listing..." },
+      { delay: 10000,color: "#3FB950",  text: "✅ DALL·E 3 image queued for 'Cyberpunk City Print'" },
+      { delay: 11200,color: "#F0A500",  text: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" },
+      { delay: 11600,color: "#F0A500",  text: "💰 Daily revenue estimate: <strong>+12.4%</strong> vs yesterday" },
+      { delay: 12400,color: "#58A6FF",  text: "🤖 Agent status: <strong style='color:#27C93F'>ACTIVE — 100% efficiency</strong>" },
+    ];
+
+    var console_div = document.getElementById('cf-demo-console');
+    var time_div    = document.getElementById('cf-agent-time');
+    var loop;
+
+    function pad(n){ return n < 10 ? '0'+n : n; }
+    function tick(){
+      var d = new Date();
+      if (time_div) time_div.textContent = pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+    }
+    setInterval(tick, 1000); tick();
+
+    function runLines(startDelay) {
+      if (!console_div) return;
+      LINES.forEach(function(line) {
+        setTimeout(function(){
+          var row = document.createElement('div');
+          row.style.cssText = 'opacity:0;transition:opacity .3s';
+          row.innerHTML = '<span style="color:#F0A500;">❯</span>&nbsp;<span style="color:' + line.color + '">' + line.text + '</span>';
+          console_div.appendChild(row);
+          // Fade in
+          requestAnimationFrame(function(){ requestAnimationFrame(function(){ row.style.opacity='1'; }); });
+          // Auto-scroll
+          console_div.scrollTop = console_div.scrollHeight;
+        }, startDelay + line.delay);
+      });
+      // Restart loop after last line + pause
+      setTimeout(function(){
+        if (console_div) {
+          // Fade out old lines
+          console_div.style.opacity = '0';
+          setTimeout(function(){
+            console_div.innerHTML = '<span style="color:#F0A500;">❯</span>&nbsp;<span style="color:#58A6FF;">closefast</span>&nbsp;--start --store VibeprintsProducts<br/>';
+            console_div.style.opacity = '1';
+            runLines(800);
+          }, 600);
+        }
+      }, startDelay + 15000);
+    }
+
+    // Start animation after short delay to not block page load
+    setTimeout(function(){ runLines(0); }, 1500);
+  })();
+  </script>
+
+
+  <section class="cf-section" id="features">
+    <div class="cf-container">
+      <div class="cf-features-header">
+        <span class="section-label">// capabilities</span>
+        <h2>Five agent modules.<br/>Infinite use cases.</h2>
+        <p>Each module runs on your own API keys — Claude, GPT, Leonardo, Runway. You control the model, the cost and the output.</p>
+      </div>
+
+      <div class="cf-features-grid">
+
+        <div class="cf-feature-card">
+          <div class="cf-feature-icon">🕵️</div>
+          <h3>Competitor &amp; Web3 Analysis</h3>
+          <p>Shadow-scan competitors across Etsy, Shopify and Web3 marketplaces. Read on-chain wallet data, token prices and DeFi signals. Output: structured JSON report with exploit vectors and opportunity gaps.</p>
+          <span class="cf-feature-tag">eth_call · Monad RPC · Etsy API · Shadow Spy</span>
+        </div>
+
+        <div class="cf-feature-card">
+          <div class="cf-feature-icon">🎬</div>
+          <h3>AI Media via Leonardo &amp; Runway</h3>
+          <p>Generate product photography, brand videos and animation via your own Leonardo, DALL·E 3 or Runway API key. You pay the model directly — zero platform markup on generation costs.</p>
+          <span class="cf-feature-tag">BYOK · Leonardo · DALL·E 3 · Runway · Kling</span>
+        </div>
+
+        <div class="cf-feature-card">
+          <div class="cf-feature-icon">🤖</div>
+          <h3>Landing Page &amp; App Builder</h3>
+          <p>Describe what you want in plain text. The AI writes the full codebase — React, HTML/CSS, Node.js, Solidity — and delivers it as a downloadable file within 48 hours. No templates.</p>
+          <span class="cf-feature-tag">React · Node.js · Solidity · HTML · Deploy-ready</span>
+        </div>
+
+        <div class="cf-feature-card">
+          <div class="cf-feature-icon">📱</div>
+          <h3>Social Media Automation</h3>
+          <p>Auto-generate X threads, Instagram Reels and TikTok scripts from any product or URL. Publish via your connected accounts. Full schedule management without leaving the dashboard.</p>
+          <span class="cf-feature-tag">X API · Instagram Graph · TikTok · Auto-post</span>
+        </div>
+
+        <div class="cf-feature-card">
+          <div class="cf-feature-icon">⚡</div>
+          <h3>E-commerce Autopilot (Etsy use case)</h3>
+          <p>The reference implementation: dynamic pricing, Printify sync, competitor repricing and CFO-grade financial reporting — all running autonomously via Etsy + Stripe APIs. Deploy as-is or fork for your own marketplace.</p>
+          <span class="cf-feature-tag">Etsy · Printify · Stripe · EBITDA · 24/7</span>
+        </div>
+
+        <div class="cf-feature-card">
+          <div class="cf-feature-icon">🔑</div>
+          <h3>BYOK — Bring Your Own Key</h3>
+          <p>Paste your Anthropic, OpenAI or Leonardo key once. Every agent call routes through your key — you see usage in your provider dashboard, never ours. Platform fee covers orchestration only.</p>
+          <span class="cf-feature-tag">Claude · GPT-4o · Gemini · Leonardo · Your cost</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ───────────────────────────────────────────────────── -->
+  <section class="cf-section cf-how" id="how-it-works">
+    <div class="cf-container">
+      <div class="cf-how-inner">
+
+        <div class="cf-how-left">
+          <span class="section-label">// how_it_works</span>
+          <h2>Connect API.<br/>Give task.<br/>Get result.</h2>
+          <p style="font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:20px;">You bring the keys. We bring the orchestration. <br/>No tokens stored on our servers.<br/>No markup on generation cost.<br/>Cancel anytime — your keys, your data.</p>
+
+          <div style="margin-top:20px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-family:var(--mono);font-size:11px;">
+            <div style="color:var(--amber);margin-bottom:10px;letter-spacing:.06em;">$ SUPPORTED_PROVIDERS</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">anthropic</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">openai</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">leonardo</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">runway</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">replicate</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">etsy</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">stripe</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">monad_rpc</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">twitter_v2</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">instagram</span>
+              <span style="color:var(--muted);padding:3px 9px;border:1px solid var(--border);border-radius:5px;">tiktok</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cf-steps">
+          <div class="cf-step">
+            <div class="cf-step-num">01</div>
+            <div class="cf-step-body">
+              <h4>Paste your API key</h4>
+              <p>One key per provider — Claude, GPT, Leonardo, Etsy, Stripe. Keys are AES-encrypted in your browser localStorage. They route to the provider directly. We never see them.</p>
+              <code style="font-size:10px">ANTHROPIC_API_KEY=sk-ant-... ✓ saved</code>
+            </div>
+          </div>
+
+          <div class="cf-step">
+            <div class="cf-step-num">02</div>
+            <div class="cf-step-body">
+              <h4>Select an agent module</h4>
+              <p>Pick the task: analyse a competitor, generate a product video, write a landing page, reprice your Etsy store, or query a Monad wallet. Each module is a pre-built prompt chain.</p>
+              <code style="font-size:10px">agent.run("competitor_spy", target="ArtShop_UA")</code>
+            </div>
+          </div>
+
+          <div class="cf-step">
+            <div class="cf-step-num">03</div>
+            <div class="cf-step-body">
+              <h4>Receive structured output</h4>
+              <p>Results arrive as downloadable files, JSON reports, scheduled social posts or auto-applied price changes. Autopilot mode runs the full loop without your input.</p>
+              <code style="font-size:10px">→ output.json · media.mp4 · landing.html ✓</code>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PLATFORMS ──────────────────────────────────────────────────────── -->
+  <section class="cf-section cf-platforms" id="integrations">
+    <div class="cf-container">
+      <span class="section-label">Ecosystem</span>
+      <h2>One platform. Every tool you need.</h2>
+      <p class="cf-platforms-sub">CloseFast Omni connects your entire business stack — no tab-switching, no copy-paste, no manual work.</p>
+
+      <div class="cf-platforms-grid">
+        <div class="cf-platform-pill"><span class="pill-icon">🛍</span> Etsy</div>
+        <div class="cf-platform-pill"><span class="pill-icon">🖨</span> Printify POD</div>
+        <div class="cf-platform-pill"><span class="pill-icon">💳</span> Stripe Billing</div>
+        <div class="cf-platform-pill"><span class="pill-icon">🤖</span> Claude AI</div>
+        <div class="cf-platform-pill"><span class="pill-icon">🔵</span> X / Twitter</div>
+        <div class="cf-platform-pill"><span class="pill-icon">📸</span> Instagram</div>
+        <div class="cf-platform-pill"><span class="pill-icon">📱</span> TikTok</div>
+        <div class="cf-platform-pill"><span class="pill-icon">🎨</span> DALL·E 3</div>
+        <div class="cf-platform-pill"><span class="pill-icon">🎬</span> Runway Gen-3</div>
+        <div class="cf-platform-pill"><span class="pill-icon">⛓</span> Monad Blockchain</div>
+        <div class="cf-platform-pill"><span class="pill-icon">🪙</span> VLY Token</div>
+        <div class="cf-platform-pill"><span class="pill-icon">🔀</span> Revolut</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SEO FOOTER ─────────────────────────────────────────────────────── -->
+  <footer class="cf-seo-footer">
+    <div class="cf-container">
+      <div class="cf-seo-inner">
+
+        <div class="cf-seo-brand">
+          <div class="cf-seo-brand-name">
+            <div class="logo-icon">⚡</div>
+            CloseFast <span style="color:var(--amber)">Omni</span>
+          </div>
+          <p>
+            CloseFast Omni is a <strong>BYOK AI orchestrator</strong> — bring your Claude, GPT or Leonardo API key
+            and deploy autonomous agents for <strong>Web3 analysis</strong>, <strong>AI media creation</strong>,
+            <strong>landing page generation</strong> and <strong>e-commerce automation</strong>.
+            One platform. Every task. You own the keys, you control the cost.
+          </p>
+        </div>
+
+        <div class="cf-seo-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How it Works</a></li>
+            <li><a href="/pricing.html">Pricing</a></li>
+            <li><a href="https://closefast.tech/#plans">Plans</a></li>
+            <li><a href="https://pancakeswap.finance/swap?outputCurrency=0x9459ddd1B70E51280DEf774650EcD04F0e24d234">VLY Token</a></li>
+          </ul>
+        </div>
+
+        <div class="cf-seo-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/cdn-cgi/l/email-protection#71071e1d081041494831161c10181d5f121e1c">Contact</a></li>
+            <li><a href="https://pancakeswap.finance/swap?outputCurrency=0x9459ddd1B70E51280DEf774650EcD04F0e24d234">Buy VLY ↗</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="cf-bottom-bar">
+        <p>© 2025 CloseFast Omni. All rights reserved.</p>
+        <p>Built with Claude AI · Powered by Monad · closefast.tech</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── SEO KEYWORDS PARAGRAPH (for crawlers) ─────────────────────────── -->
+  <div class="cf-seo-keywords">
+    <div class="cf-container">
+      <p>
+        CloseFast Omni is a <strong>BYOK AI orchestrator</strong> — connect Claude, GPT-4o, Leonardo or Runway via your own API keys
+        and deploy autonomous agents with zero platform markup on generation cost.
+        Capabilities include: <strong>AI agent for e-commerce</strong>, <strong>Web3 data analysis</strong>,
+        <strong>competitor intelligence</strong>, <strong>API automation</strong>,
+        <strong>social media automation</strong> (X, Instagram, TikTok),
+        <strong>AI landing page builder</strong>, <strong>AI app code generator</strong>,
+        <strong>AI media studio</strong> (DALL·E 3, Leonardo, Runway, Kling),
+        <strong>Etsy dynamic pricing bot</strong>, Printify &amp; Stripe sync,
+        Monad blockchain token creation, DeFi wallet analysis, CFO financial reporting.
+        BYOK · bring your own key · Claude API · GPT automation · Leonardo API · no-code AI agent ·
+        AI orchestrator · autonomous business tools · Web3 commerce platform.
+      </p>
+    </div>
+  </div>
+
+</
+  </div>
+
+  <!-- React overlay — transparent until app mounts successfully -->
+  <div id="app-overlay">
+    <div id="ldr">
+      <div style="font-size:44px">⚡</div>
+      <div class="sp"></div>
+      <div id="st">CLOSEFAST OMNI</div>
+    </div>
+    <div id="root"></div>
+  </div>
+
+  <!-- Owner auth bridge — runs BEFORE React mounts -->
+  <script>
+  (function(){
+    try {
+      var p = new URLSearchParams(window.location.search);
+      var go = p.get('go');
+      var em = p.get('e');
+
+      // Owner redirect from register.html
+      if (go === 'owner' && em) {
+        var ownerUser = {
+          email: decodeURIComponent(em),
+          name:  em.indexOf('volya089') !== -1 ? 'Yaroslav' : 'Slavik',
+          plan:  'elite',
+          paid:  true,
+          god:   true,
+          lang:  'en'
+        };
+        sessionStorage.setItem('cf_user', JSON.stringify(ownerUser));
+        sessionStorage.setItem('cf_lang', 'en');
+        localStorage.setItem('cf_plan_' + ownerUser.email, 'elite');
+        localStorage.setItem('cf_activated_email', ownerUser.email);
+        localStorage.setItem('cf_activated_plan',  'elite');
+        // Clean URL so React doesn't see params
+        window.history.replaceState({}, '', '/');
+      }
+
+      // Paid user redirect from pricing/register (?go=paid&e=EMAIL&plan=pro)
+      if (go === 'paid' && em) {
+        var plan  = p.get('plan') || 'starter';
+        var paidUser = {
+          email: decodeURIComponent(em),
+          name:  decodeURIComponent(em).split('@')[0],
+          plan:  plan,
+          paid:  true,
+          god:   false,
+          lang:  'en'
+        };
+        sessionStorage.setItem('cf_user', JSON.stringify(paidUser));
+        sessionStorage.setItem('cf_lang', 'en');
+        localStorage.setItem('cf_plan_' + paidUser.email, plan);
+        localStorage.setItem('cf_activated_email', paidUser.email);
+        localStorage.setItem('cf_activated_plan',  plan);
+        window.history.replaceState({}, '', '/');
+      }
+    } catch(e) {}
+  })();
+  </script>
+
+  <!-- ✅ Owner/Paid auth bridge — MUST run before app.js -->
+  <script>
+  (function(){
+    try {
+      var p   = new URLSearchParams(window.location.search);
+      var go  = p.get('go');
+      var em  = decodeURIComponent(p.get('e') || '');
+      var plan = p.get('plan') || 'elite';
+
+      if (!go || !em) return;
+      window.history.replaceState({}, '', '/');
+
+      if (go === 'owner') {
+        var u = {email:em, name:em.indexOf('volya089')!==-1?'Yaroslav':'Slavik',
+                 plan:'elite', paid:true, god:true, lang:'en'};
+        sessionStorage.setItem('cf_user', JSON.stringify(u));
+        sessionStorage.setItem('cf_lang','en');
+        localStorage.setItem('cf_plan_'+em,'elite');
+        localStorage.setItem('cf_activated_email',em);
+        localStorage.setItem('cf_activated_plan','elite');
+      }
+      if (go === 'paid') {
+        var u2 = {email:em, name:em.split('@')[0],
+                  plan:plan, paid:true, god:false, lang:'en'};
+        sessionStorage.setItem('cf_user', JSON.stringify(u2));
+        sessionStorage.setItem('cf_lang','en');
+        localStorage.setItem('cf_plan_'+em, plan);
+        localStorage.setItem('cf_activated_email', em);
+        localStorage.setItem('cf_activated_plan', plan);
+      }
+    } catch(e){}
+  })();
+  </script>
+
+  <script src="app.js"></script>
+
+  <script>
+  (function(){
+    var overlay = document.getElementById('app-overlay');
+    // Overlay is always visible (fixed fullscreen) — loader shows inside it
+
+    function onError(msg) {
+      console.error('[CloseFast] ' + msg);
+      // Keep overlay visible but hide loader, show error
+      var ldr = document.getElementById('ldr');
+      if (ldr) ldr.style.display = 'none';
+      // Show small error toast on landing
+      var toast = document.createElement('div');
+      toast.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:999;background:#1E293B;border:1px solid #F0A500;border-radius:10px;padding:12px 18px;color:#F0A500;font-family:monospace;font-size:12px;max-width:320px';
+      toast.textContent = '⚠️ App error — using static version. ' + msg.substring(0,100);
+      document.body.appendChild(toast);
+      setTimeout(function(){ toast.remove(); }, 8000);
+    }
+
+    function mount() {
+      if (typeof React === 'undefined')   return onError('React CDN failed to load');
+      if (typeof ReactDOM === 'undefined') return onError('ReactDOM CDN failed to load');
+      if (!window.CloseFastApp)            return onError('app.js: CloseFastApp not found');
+
+      try {
+        ReactDOM.createRoot(document.getElementById('root'))
+          .render(React.createElement(window.CloseFastApp));
+
+        // React mounted — hide the fullscreen loader
+        setTimeout(function() {
+          var ldr = document.getElementById('ldr');
+          if (ldr) { ldr.style.opacity = '0'; setTimeout(function(){ ldr.remove(); }, 400); }
+        }, 300);
+
+      } catch(e) {
+        onError('Render error: ' + e.message);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mount);
+    } else {
+      mount();
+    }
+  })();
+  </script>
+
+
+  <script>
+  // Landing theme toggle
+  (function() {
+    // Default: light (ivory)
+    var isDark = localStorage.getItem('cf_landing_theme') === 'dark';
+
+    function applyTheme(dark) {
+      var landing = document.getElementById('landing-seo');
+      var btn     = document.getElementById('cf-theme-btn');
+      if (!landing) return;
+      if (dark) {
+        landing.querySelector('.cf-landing').classList.add('dark');
+        if (btn) btn.textContent = '☀️';
+      } else {
+        landing.querySelector('.cf-landing').classList.remove('dark');
+        if (btn) btn.textContent = '🌙';
+      }
+      // Also update html/body bg to match
+      document.documentElement.style.background = dark ? '#07080A' : '#F5F0E8';
+      document.body.style.background = dark ? '#07080A' : '#F5F0E8';
+    }
+
+    window.cfToggleTheme = function() {
+      isDark = !isDark;
+      localStorage.setItem('cf_landing_theme', isDark ? 'dark' : 'light');
+      applyTheme(isDark);
+    };
+
+    // Scroll up to show React login form
+    
+    window.cfCloseModal = function() {
+      document.getElementById('cf-register-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    // Apply on load
+    applyTheme(isDark);
+  })();
+  </script>
+
+
+  <!-- ── REGISTRATION MODAL ─────────────────────────────────────── -->
+  <div id="cf-register-modal" role="dialog" aria-modal="true" aria-label="Create your account">
+    <div class="modal-backdrop" onclick="cfCloseModal()"></div>
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="cfCloseModal()" aria-label="Close">✕</button>
+
+      <div class="modal-logo">
+        <div class="logo-mark">⚡</div>
+        <span>CloseFast <em>Omni</em></span>
+      </div>
+
+      <div id="cf-modal-form-wrap">
+        <div class="modal-title">Start free today</div>
+        <p class="modal-sub">Choose a plan and enter your email — your agent goes live in 2 minutes.</p>
+
+        <!-- Plan selector -->
+        <div class="modal-plans" id="cf-plan-select" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="modal-plan selected" data-plan="starter" onclick="cfSelectPlan(this)">
+            <div class="plan-name">⚡ Starter</div>
+            <div class="plan-price">$19 / month</div>
+          </div>
+          <div class="modal-plan" data-plan="pro" onclick="cfSelectPlan(this)">
+            <div class="plan-name" style="color:#60A5FA">◈ Pro</div>
+            <div class="plan-price">$49 / month</div>
+          </div>
+          <div class="modal-plan" data-plan="elite" onclick="cfSelectPlan(this)">
+            <div class="plan-name" style="color:#34D399">◆ Elite</div>
+            <div class="plan-price">$99 / month</div>
+          </div>
+          <div class="modal-plan" data-plan="sovereign" onclick="cfSelectPlan(this)">
+            <div class="plan-name" style="color:#A78BFA">👑 Sovereign</div>
+            <div class="plan-price">$249 / month</div>
+          </div>
+          <div class="modal-plan" data-plan="lifetime" onclick="cfSelectPlan(this)" style="grid-column:span 2">
+            <div class="plan-name" style="color:#7C3AED">♾️ Lifetime</div>
+            <div class="plan-price">$499 one-time · all Sovereign features forever</div>
+          </div>
+            <div class="plan-price">$49 / month</div>
+          </div>
+          <div class="modal-plan" data-plan="elite" data-price="$99/mo" onclick="cfSelectPlan(this)">
+            <div class="plan-name">◆ Elite</div>
+            <div class="plan-price">$99 / month</div>
+          </div>
+          <div class="modal-plan" data-plan="agency" data-price="$249/mo" onclick="cfSelectPlan(this)">
+            <div class="plan-name" style="color:#7C3AED">🏢 Agency</div>
+            <div class="plan-price">$249 / month</div>
+          </div>
+          <div class="modal-plan" data-plan="lifetime" data-price="$499 once" onclick="cfSelectPlan(this)">
+            <div class="plan-name" style="color:#6D28D9">♾️ Lifetime</div>
+            <div class="plan-price">$499 one-time</div>
+          </div>
+        </div>
+
+        <div class="modal-field">
+          <label>Your email</label>
+          <input type="email" id="cf-reg-email" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="modal-field">
+          <label>Full name</label>
+          <input type="text" id="cf-reg-name" placeholder="Jane Smith" autocomplete="name"/>
+        </div>
+
+        <button class="modal-submit" id="cf-reg-btn" onclick="cfRegisterSubmit()">
+          <span id="cf-reg-btn-text">⚡ Launch My Agent →</span>
+          <span class="btn-spin" id="cf-reg-spin"></span>
+        </button>
+
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;margin-bottom:6px">
+          <span style="font-size:11px;color:#9CA3AF;font-family:'IBM Plex Mono',monospace">🔒 Secured by</span>
+          <span style="background:#635BFF;border-radius:5px;padding:3px 10px;font-size:11px;font-weight:700;color:#fff;font-family:'IBM Plex Mono',monospace">Stripe</span>
+          <span style="font-size:11px;color:#9CA3AF;font-family:'IBM Plex Mono',monospace">PCI DSS · 256-bit SSL</span>
+        </div>
+        <!-- Stripe trust -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;font-size:11px;color:#9CA3AF;">
+          <svg width="36" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.45 9.54c0-.88.72-1.22 1.92-1.22 1.72 0 3.88.52 5.6 1.44V5.56C11.17 4.82 9.37 4.5 7.37 4.5 3.09 4.5.5 6.74.5 9.78c0 4.74 6.52 3.98 6.52 6.02 0 1.04-.9 1.38-2.16 1.38-1.88 0-4.28-.78-6.18-1.82v4.26c2.1.9 4.22 1.28 6.18 1.28 4.38 0 7.38-2.16 7.38-5.24-.02-5.12-6.79-4.2-6.79-6.12zM22.6 1.5l-4.92 1.04-.02 16.12c0 2.98 2.24 5.18 5.22 5.18 1.66 0 2.86-.3 3.54-.66v-3.96c-.64.26-3.82 1.18-3.82-1.78V9.26h3.82V5.22H22.6V1.5zm10.04 3.72l-.3-1.22h-4.32v19.56h4.98V11.1c1.18-1.54 3.18-1.26 3.8-1.04V5.22c-.66-.24-3.06-.7-4.16-.0zm7.18-1.22h5V23.56h-5V4zm2.5-5.5c-1.6 0-2.88 1.3-2.88 2.9s1.28 2.9 2.88 2.9 2.88-1.3 2.88-2.9S43.92-1.5 42.32-1.5z" fill="#635BFF"/></svg>
+          Secured by Stripe · 256-bit SSL · 14-day refund
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0 4px;padding:8px;background:#F9FAFB;border-radius:8px;border:1px solid #E5E7EB;">
+          <span style="background:linear-gradient(135deg,#6772E5,#8B5CF6);border-radius:4px;padding:1px 7px;font-size:11px;font-weight:800;color:#fff;font-family:monospace">stripe</span>
+          <span style="font-size:11px;color:#6B7280">Secure · SSL encrypted · No card stored</span>
+          <span>🔒</span>
+        </div>
+        <p class="modal-terms">
+          By continuing you agree to our
+          <a href="/terms.html" target="_blank">Terms</a> and
+          <a href="/privacy.html" target="_blank">Privacy Policy</a>.
+          14-day money-back &nbsp;·&nbsp;
+          <a href="/pricing.html" style="color:#D4920A;text-decoration:none">See all plans →</a>
+        </p>
+      </div>
+
+      <div class="modal-success" id="cf-modal-success">
+        <div class="success-icon">🚀</div>
+        <h3>You're in!</h3>
+        <p>Check your inbox — we're sending your login link and activating your AI agent right now.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  function cfSelectPlan(el) {
+    document.querySelectorAll('.modal-plan').forEach(function(p){ p.classList.remove('selected'); });
+    el.classList.add('selected');
+  }
+
+  // Owner emails — bypass payment entirely
+  var CF_OWNER_EMAILS = ['volya089@gmail.com', 'slavikbobnar1981@gmail.com'];
+
+  // Owner emails — bypass Stripe
+  var CF_OWNERS = ['volya089@gmail.com','slavikbobnar1981@gmail.com'];
+
+  function cfRegisterSubmit() {
+    var email   = (document.getElementById('cf-reg-email').value || '').trim().toLowerCase();
+    var name    = (document.getElementById('cf-reg-name').value  || '').trim();
+    var planEl  = document.querySelector('.modal-plan.selected');
+    var planKey = planEl ? (planEl.dataset.plan || 'starter') : 'starter';
+
+    if (!email || !email.includes('@')) {
+      var ei = document.getElementById('cf-reg-email');
+      ei.focus(); ei.style.borderColor = '#EF4444'; return;
+    }
+
+    document.getElementById('cf-reg-btn-text').style.display = 'none';
+    document.getElementById('cf-reg-spin').style.display = 'block';
+    document.getElementById('cf-reg-btn').disabled = true;
+
+    // ── OWNER → free access ─────────────────────────────────────────
+    if (CF_OWNERS.indexOf(email) !== -1) {
+      try {
+        localStorage.setItem('cf_plan_' + email, planKey);
+        localStorage.setItem('cf_activated_email', email);
+        localStorage.setItem('cf_activated_plan',  planKey);
+      } catch(e) {}
+      setTimeout(function() {
+        var w = document.getElementById('cf-modal-form-wrap');
+        var s = document.getElementById('cf-modal-success');
+        if (w) w.style.display = 'none';
+        if (s) {
+          s.style.display = 'block';
+          s.querySelector('h3').textContent = 'Owner access activated!';
+          s.querySelector('p').textContent  = 'Redirecting to your dashboard...';
+        }
+        setTimeout(function() { window.location.reload(); }, 1400);
+      }, 400);
+      return;
+    }
+
+    // ── STRIPE REDIRECT ─────────────────────────────────────────────
+    var LINKS = {
+      starter: 'https://buy.stripe.com/test_aFa00k1h24Qg42f3Xd2ZO02',
+      pro:     'https://buy.stripe.com/test_bJe7sM7FqciI6an79p2ZO01',
+      elite:   'https://buy.stripe.com/test_00wdRa0cYciI1U7eBR2ZO03',
+      agency:  'https://buy.stripe.com/test_bJe7sM7FqciI6an79p2ZO01',
+      lifetime:'https://buy.stripe.com/test_14A4gA3padmM7er51h2ZO00',
+    };
+    try {
+      sessionStorage.setItem('cf_pending_email', email);
+      sessionStorage.setItem('cf_pending_name', name);
+      sessionStorage.setItem('cf_pending_plan', planKey);
+    } catch(e) {}
+    setTimeout(function() {
+      window.location.href = LINKS[planKey] || LINKS.starter;
+    }, 500);
+  }
+  
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') cfCloseModal();
+  });
+  </script>
+
+
+  <script>
+  (function() {
+    var LINES = [
+      {t:'ok',   text:'✅ Etsy API connected — store: VibeprintsProducts'},
+      {t:'info', text:'🔍 Scanning 52 competitor shops in "Wall Art" niche...'},
+      {t:'warn', text:'⚠️  Alert: "ArtShop22" dropped price to $23.50 (-8%)'},
+      {t:'out',  text:'⚙️  Calculating optimal counter-strategy...'},
+      {t:'ok',   text:'🚀 Auto-repriced "Cyberpunk Print" → $22.95 (+CTR est. +14%)'},
+      {t:'info', text:'📱 Generating X thread from top-selling listing...'},
+      {t:'ok',   text:'✅ Thread posted → 3 platforms (X, Instagram, TikTok)'},
+      {t:'out',  text:'📦 Printify sync: 3 new orders routed to production'},
+      {t:'profit',text:'💰 Today\'s revenue projection: +$214 (+12.4% vs yesterday)'},
+      {t:'ok',   text:'🤖 Agent status: ACTIVE — 100% efficiency — next scan in 15min'},
+    ];
+
+    var console_el = document.getElementById('cf-console');
+    if (!console_el) return;
+
+    var lineIdx  = 0;
+    var charIdx  = 0;
+    var current  = null;
+    var cursor   = null;
+    var paused   = false;
+
+    function colorClass(t) {
+      return t==='ok'?'cf-ok':t==='warn'?'cf-warn':t==='info'?'cf-info':t==='profit'?'cf-profit':'cf-out';
+    }
+
+    function addLine(line) {
+      var div  = document.createElement('div');
+      div.className = 'cf-console-line';
+      var pre  = document.createElement('span');
+      pre.className = colorClass(line.t);
+      pre.style.paddingLeft = '16px';
+      div.appendChild(pre);
+      // cursor
+      cursor = document.createElement('span');
+      cursor.className = 'cf-cursor';
+      div.appendChild(cursor);
+      console_el.appendChild(div);
+      current = pre;
+      charIdx = 0;
+      // scroll to bottom
+      console_el.scrollTop = console_el.scrollHeight;
+      return div;
+    }
+
+    function typeChar() {
+      if (!current) {
+        current = null;
+        addLine(LINES[lineIdx % LINES.length]);
+        return;
+      }
+      var text = LINES[lineIdx % LINES.length].text;
+      if (charIdx < text.length) {
+        current.textContent += text[charIdx];
+        charIdx++;
+        console_el.scrollTop = console_el.scrollHeight;
+        setTimeout(typeChar, 28 + Math.random()*18);
+      } else {
+        // Line done — remove cursor from this line, pause then next
+        if (cursor && cursor.parentNode) cursor.remove();
+        lineIdx++;
+        // Cap at 12 lines then reset
+        if (lineIdx >= LINES.length) {
+          setTimeout(function() {
+            // Keep last 2 lines, reset rest
+            var lines = console_el.querySelectorAll('.cf-console-line');
+            for (var i = 0; i < lines.length - 1; i++) lines[i].remove();
+            // Add new prompt line
+            var div = document.createElement('div');
+            div.className = 'cf-console-line';
+            div.innerHTML = '<span class="cf-prompt">$</span><span class="cf-cmd"> closefast run --agent=omni</span>';
+            console_el.insertBefore(div, console_el.firstChild);
+            lineIdx = 0;
+            current = null;
+            setTimeout(function(){ addLine(LINES[0]); setTimeout(typeChar, 50); }, 800);
+          }, 3000);
+        } else {
+          current = null;
+          setTimeout(function(){ addLine(LINES[lineIdx]); setTimeout(typeChar, 50); }, 900);
+        }
+      }
+    }
+
+    // Start after short delay
+    setTimeout(function() {
+      addLine(LINES[0]);
+      setTimeout(typeChar, 200);
+    }, 1200);
+  })();
+  </script>
+
+
+  <script>
+  (function() {
+    var LINES = [
+      { color: "#94A3B8", text: "> Initializing CloseFast Omni Agent...", delay: 0 },
+      { color: "#60A5FA", text: "> Connecting to Etsy API (VibeprintsProducts)...", delay: 900 },
+      { color: "#34D399", text: "  ✅ Etsy API connected — 124 active listings found", delay: 1700 },
+      { color: "#60A5FA", text: "> Scanning competitor landscape...", delay: 2600 },
+      { color: "#FCD34D", text: "  ⚠️  Alert: 'ArtShop_UA' dropped price → $22.40", delay: 3500 },
+      { color: "#FCD34D", text: "  ⚠️  Alert: New trend detected — 'Cyberpunk Wall Art' +340% ↑", delay: 4400 },
+      { color: "#60A5FA", text: "> Running AI pricing engine...", delay: 5300 },
+      { color: "#34D399", text: "  ✅ Repriced 12 listings → avg margin +8.3%", delay: 6200 },
+      { color: "#60A5FA", text: "> Generating social content (X + Instagram)...", delay: 7100 },
+      { color: "#34D399", text: "  ✅ 3 posts scheduled — next: today 18:00 UTC", delay: 7900 },
+      { color: "#60A5FA", text: "> Syncing orders to Printify...", delay: 8700 },
+      { color: "#34D399", text: "  ✅ 7 orders routed to production automatically", delay: 9500 },
+      { color: "#60A5FA", text: "> Calculating today\'s revenue delta...", delay: 10400 },
+      { color: "#F0A500", text: "  💰 Revenue forecast: +$127.40 vs. yesterday (+12.4%)", delay: 11300 },
+      { color: "#A78BFA", text: "  🤖 Agent status: ACTIVE · Efficiency: 100%", delay: 12200 },
+      { color: "#34D399", text: "> All systems nominal. Next scan in 60 minutes.", delay: 13100 },
+    ];
+
+    var PROGRESS_STEPS = [0, 10, 20, 30, 45, 55, 65, 72, 80, 85, 88, 93, 95, 98, 100, 100];
+
+    function runTerminal() {
+      var con = document.getElementById('cf-console');
+      var bar = document.getElementById('cf-progress-bar');
+      var eff = document.getElementById('cf-efficiency');
+      if (!con) return;
+
+      con.innerHTML = '';
+      var i = 0;
+
+      function showLine() {
+        if (i >= LINES.length) {
+          // Restart after 4 sec pause
+          setTimeout(runTerminal, 4000);
+          return;
+        }
+        var line = LINES[i];
+        var span = document.createElement('div');
+        span.style.color = line.color;
+        span.style.opacity = '0';
+        span.style.transform = 'translateX(-6px)';
+        span.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+        span.textContent = line.text;
+        con.appendChild(span);
+
+        // Fade in
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            span.style.opacity = '1';
+            span.style.transform = 'translateX(0)';
+          });
+        });
+
+        // Auto-scroll
+        con.scrollTop = con.scrollHeight;
+
+        // Progress bar
+        if (bar && PROGRESS_STEPS[i] !== undefined) {
+          var pct = PROGRESS_STEPS[i];
+          bar.style.width = pct + '%';
+          if (eff) eff.textContent = pct + '%';
+        }
+
+        i++;
+        if (i < LINES.length) {
+          var nextDelay = LINES[i].delay - LINES[i-1].delay;
+          setTimeout(showLine, Math.max(nextDelay, 200));
+        } else {
+          setTimeout(showLine, 800);
+        }
+      }
+
+      showLine();
+    }
+
+    // Start after 1.2s — let page render first
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() { setTimeout(runTerminal, 1200); });
+    } else {
+      setTimeout(runTerminal, 1200);
+    }
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Create your CloseFast Omni account — AI agents for Etsy sellers. Free trial, no credit card needed."/>
+  <title>Create Account — CloseFast Omni</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230F172A'/><text x='16' y='24' text-anchor='middle' font-size='20' fill='%23F0A500'>⚡</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  /* ── THEME VARIABLES ── */
+  :root,[data-theme="light"]{
+    --bg:#F5F0E8; --surf:#FFFFFF; --card:#FFFFFF;
+    --bdr:#E5E7EB; --bdr2:#D1D5DB;
+    --txt:#111827; --t2:#374151; --t3:#6B7280; --t4:#9CA3AF;
+    --amber:#D4920A; --amberL:rgba(212,146,10,.10);
+    --amber-btn:#F0A500;
+    --grn:#059669; --grnL:rgba(5,150,105,.08);
+    --red:#DC2626; --redL:rgba(220,38,38,.08);
+    --shadow:0 1px 3px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.06);
+    --shadow-lg:0 4px 6px rgba(0,0,0,.04),0 20px 60px rgba(0,0,0,.10);
+    --mono:'IBM Plex Mono',monospace;
+    --sans:'DM Sans',sans-serif;
+    --dis:'Syne',sans-serif;
+  }
+  [data-theme="dark"]{
+    --bg:#09090B; --surf:#111113; --card:#17191F;
+    --bdr:rgba(255,255,255,.07); --bdr2:rgba(255,255,255,.12);
+    --txt:#F5F5F0; --t2:#D1D5DB; --t3:#8B909A; --t4:#6B7280;
+    --amber:#F0A500; --amberL:rgba(240,165,0,.10);
+    --amber-btn:#F0A500;
+    --grn:#10B981; --grnL:rgba(16,185,129,.08);
+    --red:#EF4444; --redL:rgba(239,68,68,.08);
+    --shadow:0 1px 3px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+    --shadow-lg:0 4px 6px rgba(0,0,0,.2),0 20px 60px rgba(0,0,0,.5);
+  }
+
+  body{
+    background:var(--bg);color:var(--txt);
+    font-family:var(--sans);min-height:100vh;
+    transition:background .3s,color .3s;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ── NAV ── */
+  .nav{
+    position:sticky;top:0;z-index:100;
+    background:var(--surf);border-bottom:1px solid var(--bdr);
+    padding:0 24px;height:58px;
+    display:flex;align-items:center;justify-content:space-between;
+    box-shadow:var(--shadow);
+  }
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo .lm{
+    width:32px;height:32px;border-radius:8px;
+    background:linear-gradient(135deg,#F0A500,#B07800);
+    display:flex;align-items:center;justify-content:center;font-size:15px;
+  }
+  .logo-txt{font-family:var(--dis);font-weight:800;font-size:15px;color:var(--txt)}
+  .logo-txt em{font-style:normal;color:var(--amber)}
+
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;color:var(--t3);text-decoration:none;transition:color .15s}
+  .nav-link:hover{color:var(--txt)}
+  .theme-btn{
+    width:36px;height:36px;border-radius:50%;
+    border:1px solid var(--bdr2);background:var(--bg);
+    color:var(--t2);font-size:16px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .2s;
+  }
+  .theme-btn:hover{transform:scale(1.1);border-color:var(--amber)}
+
+  /* ── PAGE LAYOUT ── */
+  .page{
+    display:grid;grid-template-columns:1fr 1fr;
+    min-height:calc(100vh - 58px);
+  }
+  @media(max-width:768px){.page{grid-template-columns:1fr}}
+
+  /* ── LEFT PROMO PANEL ── */
+  .promo{
+    background:linear-gradient(160deg,#0F172A 0%,#1E293B 60%,#0F172A 100%);
+    padding:52px 44px;display:flex;flex-direction:column;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .promo::before{
+    content:'';position:absolute;top:-100px;right:-100px;
+    width:400px;height:400px;
+    background:radial-gradient(circle,rgba(240,165,0,.15) 0%,transparent 65%);
+    pointer-events:none;
+  }
+  .promo-badge{
+    display:inline-flex;align-items:center;gap:7px;
+    background:rgba(240,165,0,.12);border:1px solid rgba(240,165,0,.25);
+    border-radius:20px;padding:5px 14px;
+    font-size:11px;font-family:var(--mono);color:#F0A500;
+    letter-spacing:.05em;margin-bottom:28px;
+  }
+  .pdot{width:6px;height:6px;border-radius:50%;background:#F0A500;animation:pulse 2s infinite}
+  .promo h2{
+    font-family:var(--dis);font-size:clamp(26px,3.5vw,38px);
+    font-weight:800;letter-spacing:-.03em;color:#F5F5F0;
+    line-height:1.15;margin-bottom:14px;
+  }
+  .promo h2 span{color:#F0A500}
+  .promo p{font-size:14px;color:#94A3B8;margin-bottom:36px;line-height:1.7;max-width:360px}
+  .promo-features{display:flex;flex-direction:column;gap:13px;margin-bottom:40px}
+  .pf{display:flex;align-items:flex-start;gap:12px}
+  .pf-icon{
+    width:34px;height:34px;border-radius:9px;flex-shrink:0;
+    background:rgba(240,165,0,.12);border:1px solid rgba(240,165,0,.2);
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+  }
+  .pf-body h4{font-size:13px;font-weight:700;color:#F5F5F0;margin-bottom:2px}
+  .pf-body p{font-size:11px;color:#64748B;line-height:1.5}
+  .promo-stats{display:flex;gap:28px;flex-wrap:wrap}
+  .pstat .num{font-family:var(--mono);font-size:22px;font-weight:700;color:#F0A500}
+  .pstat .lbl{font-size:10px;color:#64748B;text-transform:uppercase;letter-spacing:.06em}
+
+  @media(max-width:768px){.promo{display:none}}
+
+  /* ── RIGHT FORM PANEL ── */
+  .form-panel{
+    background:var(--surf);
+    display:flex;align-items:center;justify-content:center;
+    padding:40px 24px;
+  }
+  .form-box{
+    width:100%;max-width:400px;
+    animation:fadeUp .5s ease both;
+  }
+
+  /* Tabs: Register / Login */
+  .tabs{display:flex;background:var(--bg);border-radius:10px;padding:4px;margin-bottom:28px}
+  .tab{
+    flex:1;text-align:center;padding:9px;border-radius:7px;
+    font-size:13px;font-weight:600;cursor:pointer;
+    color:var(--t3);background:transparent;border:none;transition:all .2s;
+  }
+  .tab.active{background:var(--surf);color:var(--txt);box-shadow:var(--shadow)}
+
+  .form-title{font-family:var(--dis);font-size:24px;font-weight:800;color:var(--txt);margin-bottom:6px}
+  .form-sub{font-size:13px;color:var(--t3);margin-bottom:24px}
+
+  /* Fields */
+  .field{margin-bottom:14px}
+  .field label{
+    display:block;font-size:10px;font-family:var(--mono);
+    letter-spacing:.1em;text-transform:uppercase;
+    color:var(--t4);margin-bottom:6px;
+  }
+  .field input{
+    width:100%;height:46px;
+    background:var(--bg);border:1.5px solid var(--bdr);
+    border-radius:10px;padding:0 14px;
+    font-size:14px;font-family:var(--sans);color:var(--txt);
+    outline:none;transition:border-color .15s,box-shadow .15s;
+  }
+  .field input:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amberL)}
+  .field input.err{border-color:var(--red);box-shadow:0 0 0 3px var(--redL)}
+  .field-err{font-size:11px;color:var(--red);margin-top:4px;display:none}
+  .field-err.show{display:block}
+
+  /* Captcha */
+  .captcha-wrap{
+    background:var(--bg);border:1.5px solid var(--bdr);
+    border-radius:10px;padding:14px 16px;margin-bottom:14px;
+  }
+  .captcha-label{font-size:10px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+  .captcha-eq{
+    font-family:var(--mono);font-size:22px;font-weight:700;
+    color:var(--amber);text-align:center;
+    padding:10px;background:var(--surf);border-radius:8px;
+    margin-bottom:10px;letter-spacing:.1em;
+    border:1px solid var(--bdr);
+  }
+  .captcha-eq span{color:var(--t3);margin:0 8px}
+  .field input.captcha-in{text-align:center;font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:.15em}
+
+  /* Submit */
+  .submit-btn{
+    width:100%;height:50px;border-radius:12px;border:none;
+    background:linear-gradient(135deg,#F0A500,#D4920A);color:#000;
+    font-family:var(--dis);font-weight:800;font-size:15px;
+    cursor:pointer;margin-top:4px;
+    box-shadow:0 4px 20px rgba(240,165,0,.28);
+    transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(240,165,0,.38)}
+  .submit-btn:active{transform:translateY(0)}
+  .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .spinner{
+    width:18px;height:18px;border-radius:50%;
+    border:2px solid rgba(0,0,0,.2);border-top-color:#000;
+    animation:spin .7s linear infinite;display:none;
+  }
+
+  .divider{display:flex;align-items:center;gap:10px;margin:16px 0}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bdr)}
+  .divider span{font-size:11px;color:var(--t4)}
+
+  /* Terms */
+  .terms{font-size:11px;color:var(--t4);text-align:center;margin-top:14px;line-height:1.7}
+  .terms a{color:var(--amber);text-decoration:none}
+
+  /* SUCCESS STATE */
+  .success-box{display:none;text-align:center;padding:20px 0}
+  .success-box .s-icon{font-size:52px;margin-bottom:16px}
+  .success-box h3{font-family:var(--dis);font-size:22px;font-weight:800;color:var(--txt);margin-bottom:8px}
+  .success-box p{font-size:13px;color:var(--t3);line-height:1.7;max-width:320px;margin:0 auto 20px}
+  .success-box .resend{
+    font-size:12px;color:var(--t4);cursor:pointer;
+    text-decoration:underline;background:none;border:none;font-family:var(--sans);
+  }
+  .success-box .resend:hover{color:var(--amber)}
+
+  /* STRIPE BADGE */
+  .stripe-row{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    padding:8px;margin-top:10px;
+    background:var(--bg);border:1px solid var(--bdr);
+    border-radius:8px;font-size:11px;color:var(--t4);
+  }
+  .stripe-logo{
+    background:linear-gradient(135deg,#6772E5,#8B5CF6);
+    border-radius:4px;padding:1px 7px;
+    font-size:11px;font-weight:800;color:#fff;font-family:monospace;
+  }
+
+  /* ALERT */
+  .alert{
+    display:none;padding:11px 14px;border-radius:8px;
+    font-size:12px;margin-bottom:14px;line-height:1.6;
+  }
+  .alert.show{display:block}
+  .alert-err{background:var(--redL);border:1px solid rgba(220,38,38,.2);color:var(--red)}
+  .alert-ok{background:var(--grnL);border:1px solid rgba(5,150,105,.2);color:var(--grn)}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="logo">
+    <div class="lm">⚡</div>
+    <span class="logo-txt">CloseFast <em>Omni</em></span>
+  </a>
+  <div class="nav-right">
+    <a href="/pricing.html" class="nav-link">Pricing</a>
+    <a href="/" class="nav-link">Home</a>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ── LEFT: Promo panel ────────────────────────────────────── -->
+  <div class="promo">
+    <div class="promo-badge"><span class="pdot"></span>Free to start · No credit card</div>
+    <h2>Your AI business<br/>agent is ready.<br/><span>Start in 2 minutes.</span></h2>
+    <p>Join 340+ Etsy sellers who automate pricing, social media and inventory — all from one command center.</p>
+
+    <div class="promo-features">
+      <div class="pf">
+        <div class="pf-icon">⚡</div>
+        <div class="pf-body">
+          <h4>AI Dynamic Pricing</h4>
+          <p>Reprices your Etsy listings 24/7 based on competitor data and market trends</p>
+        </div>
+      </div>
+      <div class="pf">
+        <div class="pf-icon">📱</div>
+        <div class="pf-body">
+          <h4>Social Auto-Pilot</h4>
+          <p>Generates and posts to X, Instagram and TikTok automatically from your listings</p>
+        </div>
+      </div>
+      <div class="pf">
+        <div class="pf-icon">🕵️</div>
+        <div class="pf-body">
+          <h4>Competitor Spy</h4>
+          <p>Full intel on any Etsy shop — pricing gaps, tag weaknesses and win strategy</p>
+        </div>
+      </div>
+      <div class="pf">
+        <div class="pf-icon">🎬</div>
+        <div class="pf-body">
+          <h4>AI Media Studio</h4>
+          <p>DALL·E 3 product photos and Runway video ads — generated without leaving the platform</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="promo-stats">
+      <div class="pstat"><div class="num">340+</div><div class="lbl">Active sellers</div></div>
+      <div class="pstat"><div class="num">$1,450</div><div class="lbl">Value included</div></div>
+      <div class="pstat"><div class="num">2 min</div><div class="lbl">Setup time</div></div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: Form panel ────────────────────────────────────── -->
+  <div class="form-panel">
+    <div class="form-box">
+
+      <!-- Plan checkout banner (shown when coming from pricing page) -->
+      <div id="plan-checkout-banner" style="
+        display:none;align-items:center;justify-content:space-between;gap:10px;
+        background:rgba(212,146,10,.08);border:1px solid rgba(212,146,10,.25);
+        border-radius:10px;padding:12px 14px;margin-bottom:18px;flex-wrap:wrap">
+        <div style="font-size:13px;color:var(--txt)">
+          <span style="font-weight:700;color:var(--amber)">⚡ Selected: </span>
+          <span id="pcb-name">Pro — $49/mo</span>
+        </div>
+        <button id="pcb-btn" style="
+          padding:8px 18px;border-radius:8px;border:none;
+          background:linear-gradient(135deg,#F0A500,#D4920A);color:#000;
+          font-family:var(--dis);font-weight:700;font-size:12px;cursor:pointer;
+          white-space:nowrap">
+          Go to Checkout →
+        </button>
+      </div>
+
+      <!-- Register / Login tabs -->
+      <div class="tabs">
+        <button class="tab active" id="tab-reg" onclick="switchTab('reg')">Create Account</button>
+        <button class="tab"        id="tab-log" onclick="switchTab('log')">Sign In</button>
+      </div>
+
+      <!-- ── REGISTER FORM ── -->
+      <div id="reg-form">
+        <!-- Plan badge (shown when coming from pricing page) -->
+        <div id="plan-selected-badge" style="
+          display:none;
+          background:var(--amberL);border:1px solid rgba(212,146,10,.25);
+          border-radius:8px;padding:8px 14px;margin-bottom:16px;
+          font-size:12px;font-weight:600;color:var(--amber);
+          font-family:var(--mono);letter-spacing:.03em;text-align:center">
+        </div>
+        <div class="form-title">Start for free</div>
+        <p class="form-sub">No credit card needed. Activate agents after you choose a plan.</p>
+
+        <div class="alert alert-err" id="reg-alert"></div>
+
+        <div class="field">
+          <label>Full name</label>
+          <input type="text" id="reg-name" placeholder="Jane Smith" autocomplete="name"/>
+          <div class="field-err" id="err-name">Please enter your name</div>
+        </div>
+        <div class="field">
+          <label>Email address</label>
+          <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email"/>
+          <div class="field-err" id="err-email">Please enter a valid email</div>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="reg-pass" placeholder="Min 8 characters" autocomplete="new-password"/>
+          <div class="field-err" id="err-pass">Password must be at least 8 characters</div>
+        </div>
+
+        <!-- Math captcha -->
+        <div class="captcha-wrap">
+          <div class="captcha-label">🧠 Verify you're human</div>
+          <div class="captcha-eq" id="cap-eq">
+            <span id="cap-a">5</span>
+            <span id="cap-op">+</span>
+            <span id="cap-b">3</span>
+            <span style="color:var(--t3)"> = ?</span>
+          </div>
+          <input type="number" class="captcha-in" id="cap-ans" placeholder="Your answer"
+            style="width:100%;height:44px;background:var(--bg);border:1.5px solid var(--bdr);border-radius:9px;padding:0 14px;font-size:18px;font-family:var(--mono);font-weight:700;color:var(--txt);text-align:center;outline:none;transition:border-color .15s"
+            oninput="this.style.borderColor=''"/>
+          <div class="field-err" id="err-cap">Incorrect answer — please try again</div>
+        </div>
+
+        <button class="submit-btn" id="reg-btn" onclick="doRegister()">
+          <span id="reg-btn-txt">⚡ Create My Account</span>
+          <span class="spinner" id="reg-spin"></span>
+        </button>
+
+        <div class="stripe-row">
+          <span class="stripe-logo">stripe</span>
+          <span>Payments by Stripe · 256-bit SSL · 14-day refund</span>
+          <span>🔒</span>
+        </div>
+
+        <p class="terms">
+          By creating an account you agree to our
+          <a href="/terms.html" target="_blank">Terms</a> and
+          <a href="/privacy.html" target="_blank">Privacy Policy</a>.
+        </p>
+      </div>
+
+      <!-- ── SUCCESS / EMAIL CONFIRMATION ── -->
+      <div class="success-box" id="reg-success">
+        <div class="s-icon">📧</div>
+        <h3>Check your inbox!</h3>
+        <p>We've sent a confirmation link to <strong id="conf-email"></strong>. Click it to activate your account and explore the platform.</p>
+        <p style="margin-top:12px;font-size:12px;color:var(--t4)">
+          After confirming, you'll get free access to browse CloseFast Omni.
+          To activate AI agents, choose a plan on the pricing page.
+        </p>
+        <a href="/pricing.html" style="
+          display:inline-flex;align-items:center;gap:6px;margin-top:20px;
+          background:linear-gradient(135deg,#F0A500,#D4920A);color:#000;
+          font-family:var(--dis);font-weight:800;font-size:13px;
+          padding:10px 24px;border-radius:10px;text-decoration:none;
+          box-shadow:0 4px 16px rgba(240,165,0,.28)">
+          View Plans & Pricing →
+        </a>
+        <br/>
+        <button class="resend" onclick="resendEmail()">Didn't receive it? Resend email</button>
+      </div>
+
+      <!-- ── LOGIN FORM ── -->
+      <div id="log-form" style="display:none">
+        <div class="form-title">Welcome back</div>
+        <p class="form-sub">Sign in to your CloseFast Omni account</p>
+
+        <div class="alert alert-err" id="log-alert"></div>
+
+        <div class="field">
+          <label>Email address</label>
+          <input type="email" id="log-email" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="log-pass" placeholder="Your password" autocomplete="current-password"
+            onkeydown="if(event.key==='Enter')doLogin()"/>
+        </div>
+
+        <button class="submit-btn" id="log-btn" onclick="doLogin()">
+          <span id="log-btn-txt">Sign In →</span>
+          <span class="spinner" id="log-spin"></span>
+        </button>
+
+        <div class="divider"><span>or</span></div>
+
+        <button onclick="switchTab('reg')" style="
+          width:100%;height:46px;border-radius:11px;
+          border:1.5px solid var(--bdr);background:var(--bg);color:var(--t2);
+          font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);
+          transition:all .15s"
+          onmouseover="this.style.borderColor='var(--amber)'"
+          onmouseout="this.style.borderColor='var(--bdr)'">
+          Create a new account
+        </button>
+
+        <p class="terms" style="margin-top:14px">
+          <a href="#" onclick="forgotPassword()">Forgot password?</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CAPTCHA ────────────────────────────────────────────────────────────────
+var capA, capB, capOp, capAnswer;
+function newCaptcha() {
+  capA  = Math.floor(Math.random()*9)+1;
+  capB  = Math.floor(Math.random()*9)+1;
+  var ops = ['+','-','×'];
+  capOp = ops[Math.floor(Math.random()*ops.length)];
+  if (capOp==='-' && capB>capA){var t=capA;capA=capB;capB=t;}
+  capAnswer = capOp==='+'?capA+capB:capOp==='-'?capA-capB:capA*capB;
+  document.getElementById('cap-a').textContent  = capA;
+  document.getElementById('cap-b').textContent  = capB;
+  document.getElementById('cap-op').textContent = capOp;
+  document.getElementById('cap-ans').value = '';
+  document.getElementById('cap-ans').style.borderColor = '';
+}
+newCaptcha();
+
+// ── OWNERS (always free God Mode access) ──────────────────────────────────
+var OWNERS = ['volya089@gmail.com','slavikbobnar1981@gmail.com'];
+
+// ── STRIPE LINKS ───────────────────────────────────────────────────────────
+var STRIPE_LINKS = {
+  starter:  'https://buy.stripe.com/test_aFa00k1h24Qg42f3Xd2ZO02',
+  pro:      'https://buy.stripe.com/test_bJe7sM7FqciI6an79p2ZO01',
+  elite:    'https://buy.stripe.com/test_00wdRa0cYciI1U7eBR2ZO03',
+  agency:   'https://buy.stripe.com/test_bJe7sM7FqciI6an79p2ZO01',
+  lifetime: 'https://buy.stripe.com/test_14A4gA3padmM7er51h2ZO00',
+};
+
+// ── THEME ─────────────────────────────────────────────────────────────────
+var dark = localStorage.getItem('cf_theme')==='dark';
+function applyTheme(d) {
+  document.documentElement.setAttribute('data-theme', d?'dark':'light');
+  document.getElementById('theme-btn').textContent = d?'☀️':'🌙';
+}
+function toggleTheme() {
+  dark=!dark;
+  localStorage.setItem('cf_theme',dark?'dark':'light');
+  applyTheme(dark);
+}
+applyTheme(dark);
+
+// ── URL PARAMS ────────────────────────────────────────────────────────────
+(function(){
+  try {
+    var p = new URLSearchParams(window.location.search);
+    window.history.replaceState({},document.title,'/register.html');
+
+    // From email confirmation or password reset
+    var status = p.get('status'), msg = p.get('msg');
+    if (status && msg) {
+      if (status==='ok') {
+        switchTab('log');
+        setTimeout(function(){ showAlert('log-alert',decodeURIComponent(msg),'ok'); },100);
+      } else {
+        showAlert('reg-alert',decodeURIComponent(msg),'err');
+      }
+      return;
+    }
+
+    // From pricing page: ?plan=pro
+    var planParam = p.get('plan');
+    if (planParam) {
+      try { sessionStorage.setItem('cf_pending_plan', planParam); } catch(e){}
+      var STRIPE_LINKS = {
+        starter: 'https://buy.stripe.com/test_aFa00k1h24Qg42f3Xd2ZO02',
+        pro:     'https://buy.stripe.com/test_bJe7sM7FqciI6an79p2ZO01',
+        elite:   'https://buy.stripe.com/test_00wdRa0cYciI1U7eBR2ZO03',
+        agency:  'https://buy.stripe.com/test_bJe7sM7FqciI6an79p2ZO01',
+        lifetime:'https://buy.stripe.com/test_14A4gA3padmM7er51h2ZO00',
+      };
+      var planLabels = {starter:'Starter — $19/mo',pro:'Pro — $49/mo',
+        elite:'Elite — $99/mo',agency:'Agency — $199/mo',lifetime:'Lifetime — $499'};
+      var planLabel = planLabels[planParam] || planParam;
+
+      // Show checkout banner at top
+      var banner = document.getElementById('plan-checkout-banner');
+      var bannerName  = document.getElementById('pcb-name');
+      var bannerBtn   = document.getElementById('pcb-btn');
+      if (banner && bannerName) {
+        bannerName.textContent = planLabel;
+        bannerBtn.onclick = function() {
+          var em = document.getElementById('reg-email').value.trim().toLowerCase() ||
+                   document.getElementById('log-email').value.trim().toLowerCase();
+          if (!em || !em.includes('@')) {
+            // No email yet — just go straight to Stripe
+            window.location.href = STRIPE_LINKS[planParam] || STRIPE_LINKS.starter;
+            return;
+          }
+          // Owner bypass
+          var OWNERS2 = ['volya089@gmail.com','slavikbobnar1981@gmail.com'];
+          if (OWNERS2.indexOf(em) !== -1) {
+            window.location.href = '/?go=owner&e=' + encodeURIComponent(em);
+            return;
+          }
+          window.location.href = STRIPE_LINKS[planParam] || STRIPE_LINKS.starter;
+        };
+        banner.style.display = 'flex';
+      }
+    }
+  } catch(e){}
+})();
+
+// ── TAB SWITCH ────────────────────────────────────────────────────────────
+function switchTab(t) {
+  document.getElementById('reg-form').style.display    = t==='reg'?'':'none';
+  document.getElementById('log-form').style.display    = t==='log'?'':'none';
+  document.getElementById('reg-success').style.display = 'none';
+  document.getElementById('tab-reg').classList.toggle('active',t==='reg');
+  document.getElementById('tab-log').classList.toggle('active',t==='log');
+}
+
+// ── ALERTS ────────────────────────────────────────────────────────────────
+function showAlert(id, msg, type) {
+  var el = document.getElementById(id);
+  if(!el) return;
+  el.textContent = msg;
+  el.className   = 'alert show alert-'+(type||'err');
+}
+function hideAlert(id) {
+  var el = document.getElementById(id);
+  if(el) el.className='alert';
+}
+
+// ── REGISTER ──────────────────────────────────────────────────────────────
+function doRegister() {
+  hideAlert('reg-alert');
+  var name  = document.getElementById('reg-name').value.trim();
+  var email = document.getElementById('reg-email').value.trim().toLowerCase();
+  var pass  = document.getElementById('reg-pass').value;
+  var ans   = parseInt(document.getElementById('cap-ans').value);
+  var ok    = true;
+
+  document.getElementById('err-name').classList.toggle('show', !name);
+  document.getElementById('err-email').classList.toggle('show', !email||!email.includes('@'));
+  document.getElementById('err-pass').classList.toggle('show',  !pass||pass.length<8);
+  if (!name||!email||!email.includes('@')||!pass||pass.length<8) ok=false;
+
+  if (isNaN(ans)||ans!==capAnswer) {
+    document.getElementById('err-cap').classList.add('show');
+    document.getElementById('cap-ans').style.borderColor='#DC2626';
+    newCaptcha(); ok=false;
+  } else {
+    document.getElementById('err-cap').classList.remove('show');
+  }
+  if (!ok) return;
+
+  document.getElementById('reg-btn-txt').style.display='none';
+  document.getElementById('reg-spin').style.display='block';
+  document.getElementById('reg-btn').disabled=true;
+
+  // Owner bypass — skip PHP entirely
+  if (OWNERS.indexOf(email)!==-1) {
+    setTimeout(function(){
+      window.location.href='/?go=owner&e='+encodeURIComponent(email);
+    },400);
+    return;
+  }
+
+  // Real registration
+  fetch('/api/auth/register',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:name,email:email,password:pass})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    document.getElementById('reg-btn-txt').style.display='block';
+    document.getElementById('reg-spin').style.display='none';
+    document.getElementById('reg-btn').disabled=false;
+    if (d.owner) {
+      window.location.href='/?go=owner&e='+encodeURIComponent(email);
+      return;
+    }
+    if (d.success) {
+      try{sessionStorage.setItem('cf_pending_email',email);}catch(e){}
+      document.getElementById('conf-email').textContent    = email;
+      document.getElementById('reg-form').style.display    = 'none';
+      document.getElementById('reg-success').style.display = 'block';
+    } else {
+      showAlert('reg-alert', d.error||'Registration failed. Please try again.', 'err');
+      newCaptcha();
+    }
+  })
+  .catch(function(){
+    // PHP not configured — demo mode: show confirm screen anyway
+    document.getElementById('reg-btn-txt').style.display='block';
+    document.getElementById('reg-spin').style.display='none';
+    document.getElementById('reg-btn').disabled=false;
+    try{sessionStorage.setItem('cf_pending_email',email);}catch(e){}
+    document.getElementById('conf-email').textContent    = email;
+    document.getElementById('reg-form').style.display    = 'none';
+    document.getElementById('reg-success').style.display = 'block';
+  });
+}
+
+// ── LOGIN ─────────────────────────────────────────────────────────────────
+function doLogin() {
+  hideAlert('log-alert');
+  var email = document.getElementById('log-email').value.trim().toLowerCase();
+  var pass  = document.getElementById('log-pass').value;
+
+  if (!email||!email.includes('@')||!pass) {
+    showAlert('log-alert','Please enter your email and password.','err');
+    return;
+  }
+
+  document.getElementById('log-btn-txt').style.display='none';
+  document.getElementById('log-spin').style.display='block';
+  document.getElementById('log-btn').disabled=true;
+
+  // Owner bypass — no PHP call needed
+  if (OWNERS.indexOf(email)!==-1) {
+    setTimeout(function(){
+      window.location.href='/?go=owner&e='+encodeURIComponent(email);
+    },400);
+    return;
+  }
+
+  // Real login
+  fetch('/api/auth/login',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:email,password:pass})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    document.getElementById('log-btn-txt').style.display='block';
+    document.getElementById('log-spin').style.display='none';
+    document.getElementById('log-btn').disabled=false;
+
+    if (d.owner) {
+      window.location.href='/?go=owner&e='+encodeURIComponent(email);
+      return;
+    }
+    if (d.success) {
+      if (d.plan) {
+        // User has a paid plan — go to app
+        window.location.href='/?go=paid&e='+encodeURIComponent(email)+'&plan='+(d.plan||'starter');
+      } else {
+        // Registered but no plan — check if they came from pricing page
+        var pending='';
+        try{pending=sessionStorage.getItem('cf_pending_plan')||'';}catch(ex){}
+        if (pending) {
+          // Send them straight to Stripe for the plan they chose
+          try{sessionStorage.setItem('cf_pending_email',email);}catch(ex){}
+          window.location.href = STRIPE_LINKS[pending]||STRIPE_LINKS.starter;
+        } else {
+          // Go to app — Plans tab will show
+          window.location.href='/';
+        }
+      }
+    } else {
+      showAlert('log-alert', d.error||'Wrong email or password. Try again.', 'err');
+    }
+  })
+  .catch(function(){
+    document.getElementById('log-btn-txt').style.display='block';
+    document.getElementById('log-spin').style.display='none';
+    document.getElementById('log-btn').disabled=false;
+    showAlert('log-alert','Connection error. Check internet and try again.','err');
+  });
+}
+
+function resendEmail() {
+  var email = document.getElementById('conf-email').textContent;
+  if (!email) return;
+  fetch('/api/auth/resend-confirm',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:email})
+  }).catch(function(){});
+  alert('Resent to '+email+'. Check spam folder if not received.');
+}
+
+function forgotPassword() {
+  var email = (document.getElementById('log-email').value||'').trim().toLowerCase();
+  if (!email) email = (prompt('Enter your email:')||'').trim().toLowerCase();
+  if (!email||!email.includes('@')) return;
+  fetch('/api/auth/forgot-password',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:email})
+  }).catch(function(){});
+  showAlert('log-alert',
+    'Reset link sent to '+email+'. Check spam folder if not received within 2 minutes.',
+    'ok');
+}
+</script>
+</body>
+</html>
